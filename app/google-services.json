@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "569603037468",
+    "project_id": "food-u-app",
+    "storage_bucket": "food-u-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:569603037468:android:282b5d6e78e0c2edb8c2d9",
+        "android_client_info": {
+          "package_name": "com.example.fooduapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWBzPLAZLTGh3SzqvHIC-uiRs4Tx_5McQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">FoodUApp</string>
+    <string name="home_title">Home</string>
+    <string name="order_title">Order</string>
+    <string name="promotion_title">Promotion</string>
+    <string name="restaurant_title">Restaurant</string>
+    <string name="login">Log in</string>
+    <string name="registration">Register</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="username_label">Username</string>
+    <string name="email_label">Email</string>
+    <string name="password_label">Password</string>
+    <string name="username_placeholder">Enter your username</string>
+    <string name="email_placeholder">username@example.com</string>
+    <string name="password_placeholder">Enter your password</string>
+    <string name="invalid_username">This field cannot be empty</string>
+    <string name="invalid_email">Please enter a valid email</string>
+    <string name="invalid_password">Please enter at least 6 characters with one digit, one lower case letter and one upper case letter</string>
+</resources>
