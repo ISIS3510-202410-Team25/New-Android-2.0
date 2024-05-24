@@ -2,14 +2,15 @@ package com.example.fooduapp.ui.restaurant
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-// import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -30,14 +31,24 @@ object RestaurantDestination : NavigationDestination {
 fun RestaurantScreen(
     modifier: Modifier = Modifier,
     viewModel: RestaurantViewModel = hiltViewModel(),
-    // connectivityViewModel: ConnectivityViewModel = hiltViewModel()
+    connectivityViewModel: ConnectivityViewModel = hiltViewModel()
 ) {
-    // val isConnected by connectivityViewModel.isConnected.observeAsState(true)
+    val isConnected by connectivityViewModel.isConnected.observeAsState(true)
+    val context = LocalContext.current
+
     Column(
         modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp)
     ) {
+        if (!isConnected) {
+            Text(
+                text = "WARNING: No internet connection",
+                color = Color.Red,
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+
         Text(
             text = "Restaurants!",
             fontSize = 32.sp,
@@ -54,9 +65,9 @@ fun RestaurantScreen(
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(top = 16.dp)
         )
-        when(val response = viewModel.restaurantResponse) {
+        when (val response = viewModel.restaurantResponse) {
             is DataResponse.Failure -> {
-                Toast.makeText(LocalContext.current, response.exception?.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, response.exception?.message, Toast.LENGTH_SHORT).show()
             }
             DataResponse.Loading -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -65,20 +76,23 @@ fun RestaurantScreen(
             }
             is DataResponse.Success -> {
                 if (response.data.isNotEmpty()) {
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(2),
+                    LazyColumn(
                         modifier = Modifier.padding(top = 16.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         items(response.data) { restaurant ->
-                            Card(modifier = modifier) {
+                            Card(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 4.dp)
+                            ) {
                                 Column {
-                                    Box(modifier = Modifier.size(200.dp)) {
+                                    Box(modifier = Modifier.height(200.dp)) {
                                         AsyncImage(
                                             model = restaurant.img,
                                             contentDescription = null,
-                                            contentScale = ContentScale.Crop
+                                            contentScale = ContentScale.Crop,
+                                            modifier = Modifier.fillMaxSize()
                                         )
                                     }
                                     Text(
@@ -108,7 +122,7 @@ fun RestaurantScreen(
                     }
                 }
             }
-            null -> {}
+            else -> {}
         }
     }
 }
