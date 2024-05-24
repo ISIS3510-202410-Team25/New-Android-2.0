@@ -2,6 +2,7 @@ package com.example.fooduapp.domain.repository
 
 import com.example.fooduapp.domain.model.DataResponse
 import com.example.fooduapp.domain.model.Food
+import com.example.fooduapp.domain.model.Restaurant
 import com.google.firebase.firestore.CollectionReference
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -12,8 +13,10 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import javax.inject.Named
 
-class RepositoryImpl @Inject constructor(private val refFoods: CollectionReference) : Repository {
+class RepositoryImpl @Inject constructor(@Named private val refFoods: CollectionReference,
+                                         @Named private val refRestaurants: CollectionReference) : Repository {
     override suspend fun deleteFood(food: Food): DataResponse<Boolean> {
         return try {
             refFoods.document(food.id).delete()
@@ -48,5 +51,20 @@ class RepositoryImpl @Inject constructor(private val refFoods: CollectionReferen
             }
         }
         awaitClose{ snapListener.remove() }
+    }
+    @OptIn(DelicateCoroutinesApi::class)
+    override fun getRestaurants(): Flow<DataResponse<List<Restaurant>>> = callbackFlow {
+        val snapListener = refRestaurants.addSnapshotListener { value, error ->
+            GlobalScope.launch(Dispatchers.IO) {
+                val response = if (value != null) {
+                    val restaurants = value.toObjects(Restaurant::class.java)
+                    DataResponse.Success(restaurants)
+                } else {
+                    DataResponse.Failure(error)
+                }
+                trySend(response)
+            }
+        }
+        awaitClose { snapListener.remove() }
     }
 }
