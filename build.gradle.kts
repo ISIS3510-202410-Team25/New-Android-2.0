@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 buildscript {
     dependencies {
         classpath("com.google.gms:google-services:4.4.1")
@@ -15,7 +17,9 @@ plugins {
 
     // Dagger - Hilt
     id("com.google.dagger.hilt.android") version "2.51.1" apply false
+
 }
+
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
