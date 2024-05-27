@@ -1,6 +1,8 @@
 package com.example.fooduapp.ui.restaurant
 
+
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -17,10 +19,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.fooduapp.R
 import com.example.fooduapp.domain.model.DataResponse
 import com.example.fooduapp.ui.navigation.NavigationDestination
+import com.example.fooduapp.domain.model.Restaurant
 
 object RestaurantDestination : NavigationDestination {
     override val route = "Restaurant"
@@ -31,7 +35,8 @@ object RestaurantDestination : NavigationDestination {
 fun RestaurantScreen(
     modifier: Modifier = Modifier,
     viewModel: RestaurantViewModel = hiltViewModel(),
-    connectivityViewModel: ConnectivityViewModel = hiltViewModel()
+    connectivityViewModel: ConnectivityViewModel = hiltViewModel(),
+    onRestaurantClick: (Restaurant) -> Unit
 ) {
     val isConnected by connectivityViewModel.isConnected.observeAsState(true)
     val context = LocalContext.current
@@ -85,6 +90,7 @@ fun RestaurantScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(vertical = 4.dp)
+                                    .clickable { onRestaurantClick(restaurant) }
                             ) {
                                 Column {
                                     Box(modifier = Modifier.height(200.dp)) {
