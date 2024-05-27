@@ -29,4 +29,7 @@ class RestaurantViewModel @Inject constructor(
             restaurantResponse = it
         }
     }
+    suspend fun getRestaurantByName(name: String): DataResponse<Restaurant> {
+        return useCase.getRestaurantByName(name)
+    }
 }

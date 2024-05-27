@@ -136,6 +136,9 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
     implementation ("androidx.compose.runtime:runtime-livedata:1.0.5")
 
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
+
+
 }
 
 kapt {

@@ -14,4 +14,6 @@ interface Repository {
     fun getFoods(): Flow<DataResponse<List<Food>>>
 
     fun getRestaurants(): Flow<DataResponse<List<Restaurant>>>
+    suspend fun getRestaurantByName(restaurantName: String): DataResponse<Restaurant>
+    suspend fun getFoodsByRestaurantName(restaurantName: String): DataResponse<List<Food>>
 }
