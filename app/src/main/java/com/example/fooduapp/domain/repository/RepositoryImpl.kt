@@ -37,6 +37,29 @@ class RepositoryImpl @Inject constructor(@Named private val refFoods: Collection
         }
     }
 
+    override suspend fun getFoodsByRestaurantName(restaurantName: String): DataResponse<List<Food>> {
+        return try {
+            val querySnapshot = refFoods.whereEqualTo("restaurantName", restaurantName).get().await()
+            val foods = querySnapshot.toObjects(Food::class.java)
+            DataResponse.Success(foods)
+        } catch (e: Exception) {
+            DataResponse.Failure(e)
+        }
+    }
+    override suspend fun getRestaurantByName(restaurantName: String): DataResponse<Restaurant> {
+        return try {
+            val snapshot = refRestaurants.whereEqualTo("name", restaurantName).get().await()
+            val restaurant = snapshot.toObjects(Restaurant::class.java).firstOrNull()
+            if (restaurant != null) {
+                DataResponse.Success(restaurant)
+            } else {
+                DataResponse.Failure(Exception("Restaurant not found"))
+            }
+        } catch (e: Exception) {
+            DataResponse.Failure(e)
+        }
+    }
+
     @OptIn(DelicateCoroutinesApi::class)
     override fun getFoods(): Flow<DataResponse<List<Food>>> = callbackFlow {
         val snapListener = refFoods.addSnapshotListener{ value, error ->
