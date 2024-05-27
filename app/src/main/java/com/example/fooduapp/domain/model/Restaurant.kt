@@ -8,7 +8,7 @@ data class Restaurant(
     var descrip: String = "",
     var img: String = "",
     var rating: String = "",
-    var foods: List<String> = emptyList()
+    var menu: List<String> = emptyList(),
 ) {
     fun toJson(): String = Gson().toJson(this)
 
