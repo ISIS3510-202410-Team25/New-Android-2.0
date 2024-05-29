@@ -74,7 +74,7 @@ fun HomeScreen(
                 }
             }
             is DataResponse.Success -> {
-                Toast.makeText(LocalContext.current, "Datos Agregados", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(LocalContext.current, "Datos Agregados", Toast.LENGTH_SHORT).show()
                 if(response.data.isNotEmpty()) {
                     LazyVerticalGrid(
                         columns = GridCells.Fixed(2),
@@ -94,8 +94,8 @@ fun HomeScreen(
                                     }
                                     Text(text = it.name, modifier = Modifier.padding(top = 8.dp, start = 8.dp), fontSize = 32.sp, fontWeight = FontWeight.Bold, lineHeight = 32.sp)
                                     Row(modifier = Modifier.padding(top = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-                                        Text(text = "${it.price} COP", fontSize = 16.sp)
-                                        Button(onClick = { /*TODO*/ }) {
+                                        Text(text = "${it.price} COP", fontSize = 16.sp, modifier = Modifier.padding(start = 8.dp))
+                                        Button(onClick = { /*TODO*/ }, modifier = Modifier.padding(start = 12.dp)) {
                                             Text(text = "Order")
                                         }
                                     }

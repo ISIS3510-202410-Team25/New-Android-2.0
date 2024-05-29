@@ -22,7 +22,7 @@ import com.example.fooduapp.ui.restaurant.RestaurantScreen
 @Composable
 fun FoodUAppNavGraph(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     NavHost(
         navController = navController,
