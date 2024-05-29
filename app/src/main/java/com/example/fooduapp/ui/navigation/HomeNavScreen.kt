@@ -20,10 +20,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.fooduapp.FoodUTopAppBar
 import com.example.fooduapp.ui.home.HomeDestination
 import com.example.fooduapp.ui.home.HomeScreen
@@ -32,6 +34,7 @@ import com.example.fooduapp.ui.order.OrderScreen
 import com.example.fooduapp.ui.promotion.PromotionDestination
 import com.example.fooduapp.ui.promotion.PromotionScreen
 import com.example.fooduapp.ui.restaurant.RestaurantDestination
+import com.example.fooduapp.ui.restaurant.RestaurantDetailScreen
 import com.example.fooduapp.ui.restaurant.RestaurantScreen
 
 data class BottomNavigationItem(
@@ -115,11 +118,24 @@ fun HomeNavScreen(
                 PromotionScreen()
             }
             composable(route = RestaurantDestination.route) {
-                RestaurantScreen()
+                RestaurantScreen(
+                    onRestaurantClick = { restaurant ->
+
+                        rootNavController.navigate("restaurantDetails/${restaurant.name}")
+                    }
+                )
+            }
+            composable(
+                route = "restaurantDetails/{restaurantName}",
+                arguments = listOf(navArgument("restaurantName") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val restaurantName = backStackEntry.arguments?.getString("restaurantName")
+                RestaurantDetailScreen(restaurantName)
             }
             composable(route = OrderDestination.route) {
                 OrderScreen()
             }
+
         }
     }
 }
