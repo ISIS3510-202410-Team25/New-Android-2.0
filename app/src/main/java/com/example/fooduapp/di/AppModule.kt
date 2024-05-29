@@ -1,7 +1,7 @@
 package com.example.fooduapp.di
 
-import com.example.fooduapp.domain.repository.Repository
-import com.example.fooduapp.domain.repository.RepositoryImpl
+import com.example.fooduapp.domain.repository.FoodRepository
+import com.example.fooduapp.domain.repository.FoodRepositoryImpl
 import com.example.fooduapp.domain.usecases.DeleteFood
 import com.example.fooduapp.domain.usecases.FoodUseCase
 import com.example.fooduapp.domain.usecases.GetFood
@@ -26,12 +26,12 @@ object AppModule {
     fun provideRefFoods(db: FirebaseFirestore): CollectionReference = db.collection("Foods")
 
     @Provides
-    fun provideRepository(impl: RepositoryImpl): Repository = impl
+    fun provideRepository(impl: FoodRepositoryImpl): FoodRepository = impl
 
     @Provides
-    fun provideFoodUseCase(repository: Repository) = FoodUseCase(
-        getFood = GetFood(repository),
-        insertFood = InsertFood(repository),
-        deleteFood = DeleteFood(repository)
+    fun provideFoodUseCase(foodRepository: FoodRepository) = FoodUseCase(
+        getFood = GetFood(foodRepository),
+        insertFood = InsertFood(foodRepository),
+        deleteFood = DeleteFood(foodRepository)
     )
 }

@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class RepositoryImpl @Inject constructor(private val refFoods: CollectionReference) : Repository {
+class FoodRepositoryImpl @Inject constructor(private val refFoods: CollectionReference) : FoodRepository {
     override suspend fun deleteFood(food: Food): DataResponse<Boolean> {
         return try {
             refFoods.document(food.id).delete()

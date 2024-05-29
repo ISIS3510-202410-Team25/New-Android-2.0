@@ -4,7 +4,7 @@ import com.example.fooduapp.domain.model.DataResponse
 import com.example.fooduapp.domain.model.Food
 import kotlinx.coroutines.flow.Flow
 
-interface Repository {
+interface FoodRepository {
 
     // Here we can define the CRUD operation
     suspend fun deleteFood(food: Food): DataResponse<Boolean>
